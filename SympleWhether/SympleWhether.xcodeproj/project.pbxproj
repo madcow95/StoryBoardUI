@@ -9,13 +9,13 @@
 /* Begin PBXBuildFile section */
 		CD854C6C2998F69C00B86A75 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD854C6B2998F69C00B86A75 /* AppDelegate.swift */; };
 		CD854C6E2998F69C00B86A75 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD854C6D2998F69C00B86A75 /* SceneDelegate.swift */; };
-		CD854C702998F69C00B86A75 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD854C6F2998F69C00B86A75 /* ViewController.swift */; };
 		CD854C732998F69C00B86A75 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD854C712998F69C00B86A75 /* Main.storyboard */; };
 		CD854C752998F69D00B86A75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD854C742998F69D00B86A75 /* Assets.xcassets */; };
 		CD854C782998F69D00B86A75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD854C762998F69D00B86A75 /* LaunchScreen.storyboard */; };
 		CD854C832998F69D00B86A75 /* SympleWhetherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD854C822998F69D00B86A75 /* SympleWhetherTests.swift */; };
 		CD854C8D2998F69D00B86A75 /* SympleWhetherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD854C8C2998F69D00B86A75 /* SympleWhetherUITests.swift */; };
 		CD854C8F2998F69D00B86A75 /* SympleWhetherUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD854C8E2998F69D00B86A75 /* SympleWhetherUITestsLaunchTests.swift */; };
+		CD854C9C2998F7A000B86A75 /* WhetherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD854C9B2998F7A000B86A75 /* WhetherViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +39,6 @@
 		CD854C682998F69C00B86A75 /* SympleWhether.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SympleWhether.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD854C6B2998F69C00B86A75 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD854C6D2998F69C00B86A75 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		CD854C6F2998F69C00B86A75 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		CD854C722998F69C00B86A75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CD854C742998F69D00B86A75 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CD854C772998F69D00B86A75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +48,7 @@
 		CD854C882998F69D00B86A75 /* SympleWhetherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SympleWhetherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD854C8C2998F69D00B86A75 /* SympleWhetherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SympleWhetherUITests.swift; sourceTree = "<group>"; };
 		CD854C8E2998F69D00B86A75 /* SympleWhetherUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SympleWhetherUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		CD854C9B2998F7A000B86A75 /* WhetherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhetherViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,8 +101,8 @@
 			children = (
 				CD854C6B2998F69C00B86A75 /* AppDelegate.swift */,
 				CD854C6D2998F69C00B86A75 /* SceneDelegate.swift */,
-				CD854C6F2998F69C00B86A75 /* ViewController.swift */,
 				CD854C712998F69C00B86A75 /* Main.storyboard */,
+				CD854C9B2998F7A000B86A75 /* WhetherViewController.swift */,
 				CD854C742998F69D00B86A75 /* Assets.xcassets */,
 				CD854C762998F69D00B86A75 /* LaunchScreen.storyboard */,
 				CD854C792998F69D00B86A75 /* Info.plist */,
@@ -258,8 +258,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD854C702998F69C00B86A75 /* ViewController.swift in Sources */,
 				CD854C6C2998F69C00B86A75 /* AppDelegate.swift in Sources */,
+				CD854C9C2998F7A000B86A75 /* WhetherViewController.swift in Sources */,
 				CD854C6E2998F69C00B86A75 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
