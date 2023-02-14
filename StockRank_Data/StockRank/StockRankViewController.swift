@@ -29,7 +29,7 @@ class StockRankViewController: UIViewController {
 
 // Data 담당
 extension StockRankViewController: UICollectionViewDataSource {
-    // Section에서 데이터의 개수?
+    // Section에서 데이터가 몇 개 필요하냐
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return stockList.count
     }
@@ -42,7 +42,20 @@ extension StockRankViewController: UICollectionViewDataSource {
         // For : 몇번째 셀거를 가져올거다?
         // 셀을 가져오면 Type은 UICollectionViewCell
         // 을 가져와서 바로 return
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StockRankCollectionViewCell", for: indexPath)
+        
+        // cell이 StockRankCollectionView 이라면 넘어가고, cell에 casting 된 값이 StockRankCollectionView가 아니라면 else 문을 탄다 여기서는 UICollectionViewCell()을 return 해준다.
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StockRankCollectionViewCell", for: indexPath) as? StockRankCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        
+        /*
+            각 셀을 표현할 때 어떤 데이터를 사용할거냐
+            indexPath.. 알아서 반복문을 돌면서 indexPath가 바뀐다??
+            무슨 뜻인지 잘 모르겠다.
+            하다보면 또 알게되겠지
+         */
+        let stock = stockList[indexPath.item]
+        cell.configure(stock)
         
         return cell
     }
@@ -50,5 +63,10 @@ extension StockRankViewController: UICollectionViewDataSource {
 
 // Layout 담당
 extension StockRankViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        // width == collectionView
+        // height = 80
+        
+        return CGSize(width: collectionView.bounds.width, height: 80)
+    }
 }
