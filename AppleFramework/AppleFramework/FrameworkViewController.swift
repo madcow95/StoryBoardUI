@@ -20,6 +20,9 @@ class FrameworkViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         
+        // navigation bar의 이름을 수동으로 지정할 수 있음
+        navigationController?.navigationBar.topItem?.title = "🌞 Apple FrameWork"
+        
         // AutoLayout에서 Estimate Size를 none으로 바꾸는 걸 코드로 한다면?
         // 아래 코드를 작성해도 되고, Main의 AutoLayout에서 LOV를 수정해도 된다.
         if let flowlayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
@@ -65,5 +68,13 @@ extension FrameworkViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 10
+    }
+}
+
+// 어플 선택 Event
+extension FrameworkViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let frameworkData = list[indexPath.item]
+        print(frameworkData.name)
     }
 }
