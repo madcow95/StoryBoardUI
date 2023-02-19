@@ -23,6 +23,13 @@ class SearchViewController: UIViewController {
         if let flowLayout = collectionVIew.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.estimatedItemSize = .zero
         }
+        
+        self.navigationItem.title = "Search"
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.placeholder = "Search"
+        searchController.searchResultsUpdater = self
+        self.navigationItem.searchController = searchController
     }
 }
 
@@ -60,4 +67,13 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 1
     }
+}
+
+extension SearchViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchResult = searchController.searchBar.text
+        print("search : \(searchResult ?? "empty")")
+    }
+    
+    
 }
