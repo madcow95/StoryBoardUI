@@ -10,9 +10,7 @@ import UIKit
 class SearchViewController: UIViewController {
     
     @IBOutlet weak var collectionVIew: UICollectionView!
-    
-    
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,8 +45,6 @@ extension SearchViewController: UICollectionViewDataSource {
         cell.configure(image)
         return cell
     }
-    
-    
 }
 
 extension SearchViewController: UICollectionViewDelegateFlowLayout {
@@ -74,6 +70,4 @@ extension SearchViewController: UISearchResultsUpdating {
         let searchResult = searchController.searchBar.text
         print("search : \(searchResult ?? "empty")")
     }
-    
-    
 }
