@@ -2,7 +2,7 @@
 //  FrameworkCell.swift
 //  AppleFramework
 //
-//  Created by joonwon lee on 2022/04/24.
+//  Created by kwangWoo choi on 2022/04/24.
 //
 
 import UIKit

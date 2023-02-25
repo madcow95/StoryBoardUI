@@ -2,7 +2,7 @@
 //  FrameworkListViewController.swift
 //  AppleFramework
 //
-//  Created by joonwon lee on 2022/04/24.
+//  Created by kwangWoo choi on 2022/04/24.
 //
 
 import UIKit
@@ -41,6 +41,7 @@ class FrameworkListViewController: UIViewController {
         
         // layer
         collectionView.collectionViewLayout = layout()
+        collectionView.delegate = self
     }
     
     private func layout() -> UICollectionViewCompositionalLayout {
@@ -67,5 +68,15 @@ extension FrameworkListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let framework = list[indexPath.item]
         print(">>> selected: \(framework.name)")
+        
+        // Storyboard 불러옴
+        let storyboard = UIStoryboard(name: "Detail", bundle: nil)
+        // Storyboard의 ViewController 불러옴
+        let view = storyboard.instantiateViewController(withIdentifier: "FrameworkDetailViewController") as! FrameworkDetailViewController
+        // 화면에 띄워줌
+        view.framework = framework
+        // stack View가 아닌 fullScreen으로 화면에 띄움
+        // view.modalPresentationStyle = .fullScreen
+        present(view, animated: true)
     }
 }
