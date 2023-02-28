@@ -86,6 +86,9 @@
                             <constraint firstItem="ftY-ml-fcH" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="eoq-YT-J8Z"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="collectionVIew" destination="ftY-ml-fcH" id="cLq-wc-itA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
