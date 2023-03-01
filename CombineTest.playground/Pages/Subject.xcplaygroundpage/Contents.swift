@@ -29,3 +29,4 @@ let publisher = ["Here", "we", "go"].publisher
 publisher.subscribe(relay)
 // 알듯말듯 하면서 헷갈리네 허허
 publisher.subscribe(variable)
+ 
