@@ -26,10 +26,57 @@ struct GithubProfile: Codable {
     }
 }
 
+final class NetworkService {
+    let session: URLSession
+    
+    init(configuration: URLSessionConfiguration) {
+        session = URLSession(configuration: configuration)
+    }
+    // fetch : 어떤 데이터를 땡겨오다?
+    func fetchProfile(userName: String, completion: @escaping (Result<GithubProfile, Error>) -> Void) {
+        let url = URL(string: "https://api.github.com/users/\(userName)")!
 
+        let task = session.dataTask(with: url) { data, response, error in
+            
+            if let error = error {
+                completion(.failure(NetworkError.transportError(error)))
+                return
+            }
+            
+            if let httpResponse = response as? HTTPURLResponse, !(200..<300).contains(httpResponse.statusCode) {
+                completion(.failure(NetworkError.responseError(statusCode: httpResponse.statusCode)))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(NetworkError.noData))
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let profile = try decoder.decode(GithubProfile.self, from: data)
+                completion(.success(profile))
+            } catch let error as NSError {
+                completion(.failure(NetworkError.decodingError(error)))
+            }
+        }
+        task.resume()
+    }
+}
 
+// Network 담당 NetworkService를 만듦
+// NetworkService를 이용한 Network 작업
 
-
+let networkService = NetworkService(configuration: .default)
+networkService.fetchProfile(userName: "madcow95") { result in
+    switch result {
+    case .failure(let error) :
+        print("error is occured >> \(error)")
+    case .success(let profile) :
+        print("profile >>> \(profile)")
+    }
+}
 
 
 //: [Next](@next)
