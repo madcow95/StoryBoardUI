@@ -11,6 +11,8 @@ import Kingfisher
 
 class UserProfileViewController: UIViewController {
     
+    let network = NetworkService(configuration: .default)
+    
     // 2. User Profile
     @Published private(set) var user: UserProfile?
     var subscriptions = Set<AnyCancellable>()
@@ -89,6 +91,8 @@ extension UserProfileViewController: UISearchBarDelegate {
         
         guard let keyword = searchBar.text, !keyword.isEmpty else { return }
         
+        // URL Request에 필요한 녀석들을 만들어줌(Resource)
+        /*
         let base = "https://api.github.com/"
         let path = "users/\(keyword)"
         let params: [String: String] = [:]
@@ -104,7 +108,27 @@ extension UserProfileViewController: UISearchBarDelegate {
         header.forEach { (key: String, value: String) in
             request.addValue(value, forHTTPHeaderField: key)
         }
+        */
+        let resource = Resource<UserProfile>(
+                            base: "https://api.github.com/",
+                            path: "users/\(keyword)",
+                            params: [:],
+                            header: ["Content-Type": "application/json"])
+        // Network Service
+        network.load(resource)
+            .receive(on: RunLoop.main)
+            .sink { completion in
+                switch completion {
+                case .failure(let error):
+                    self.user = nil
+                case .finished: break
+                }
+            } receiveValue: { user in
+                self.user = user
+            }.store(in: &subscriptions)
+
         
+        /*
         URLSession
             .shared
             .dataTaskPublisher(for: request)
@@ -129,5 +153,6 @@ extension UserProfileViewController: UISearchBarDelegate {
                 self.user = profile
             }
             .store(in: &subscriptions)
+         */
     }
 }
