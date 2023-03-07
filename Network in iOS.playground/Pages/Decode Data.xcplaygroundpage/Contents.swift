@@ -19,8 +19,34 @@ struct GithubProfile: Codable {
     }
 }
 
+let configuration = URLSessionConfiguration.default
+let session = URLSession(configuration: configuration)
 
+let url = URL(string: "https://api.github.com/users/cafielo")!
 
+let task = session.dataTask(with: url) { data, response, error in
+    guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
+        print("---> response \(response)")
+        return
+    }
+    
+    guard let data = data else { return }
+    // data -> GithubProfile로 변환해야함
+    // let result = String(data: data, encoding: .utf8)!
+    
+    do {
+        let decoder = JSONDecoder()
+        let profile = try decoder.decode(GithubProfile.self, from: data)
+        print("profile >>> \(profile)")
+    } catch let error as NSError {
+        print("error is occured >> \(error)")
+    }
+}
+task.resume()
+/**
+    App Model를 JSON으로 변환 : Encoding
+    JSON를 App Model으로 변환 : Decoding
+ */
 
 
 

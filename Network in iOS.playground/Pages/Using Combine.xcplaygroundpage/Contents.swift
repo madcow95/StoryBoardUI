@@ -57,7 +57,6 @@ let networkService = NetworkService(configuration: .default)
 let subscription = networkService
     .fetchProfile(userName: "madcow95")
     .receive(on: RunLoop.main)
-    .print("[Debug]")
     .sink { completion in
         print("completion >>> \(completion)")
     } receiveValue: { profile in
