@@ -68,9 +68,9 @@ class UserProfileViewController: UIViewController {
         self.nameLabel.text = user.name
         self.loginLabel.text = user.login
         self.followerLabel.text = "followers: \(user.followers)"
-        self.followingLabel.text = "followers: \(user.following)"
-        self.thumbnail.image = nil
-        
+        self.followingLabel.text = "followings: \(user.following)"
+        // image url -> image로 변환
+        self.thumbnail.kf.setImage(with: user.avatarUrl)
     }
     
     // Network
@@ -120,6 +120,11 @@ extension UserProfileViewController: UISearchBarDelegate {
             .receive(on: RunLoop.main)
             .sink { completion in
                 print("completion text test >> \(completion)")
+                switch completion {
+                case .failure(let error):
+                    self.user = nil
+                case .finished: break
+                }
             } receiveValue: { profile in
                 self.user = profile
             }
