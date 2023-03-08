@@ -10,6 +10,8 @@ import Combine
 
 class SearchViewController: UIViewController {
     
+    let network = NetworkService(configuration: .default)
+    
     @Published private(set) var users: [SearchResult] = []
     var subscriptions = Set<AnyCancellable>()
     
@@ -98,6 +100,21 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         guard let keyword = searchBar.text, !keyword.isEmpty else { return }
+        
+        let resource = Resource<SearchUserResponse>(
+            base: "https://api.github.com/",
+            path: "search/users",
+            params: ["q": keyword],
+            header: ["Content-Type": "application/json"]
+        )
+        
+        network.load(resource)
+            .map { $0.items }
+            .replaceError(with: [])
+            .receive(on: RunLoop.main)
+            .assign(to: \.users, on: self)
+            .store(in: &subscriptions)
+        /*
         let base = "https://api.github.com/"
         let path = "search/users"
         let parameter: [String: String] = ["q": keyword]
@@ -122,5 +139,6 @@ extension SearchViewController: UISearchBarDelegate {
             .receive(on: RunLoop.main)
             .assign(to: \.users, on: self)
             .store(in: &subscriptions)
+         */
     }
 }
