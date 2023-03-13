@@ -22,7 +22,7 @@ class UserProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = SearchViewModel(network: NetworkService(configuration: .default))
+        viewModel = SearchViewModel(network: NetworkService(configuration: .default), selectedUser: nil)
         setupUI()
         embedSearchControl()
         bind()
@@ -44,28 +44,15 @@ class UserProfileViewController: UIViewController {
     }
     
     private func bind() {
-        viewModel.$user
+        viewModel.selectedUser
             .receive(on: RunLoop.main)
             .sink { [unowned self] result in
-                self.update(result)
+                self.nameLabel.text = self.viewModel.name
+                self.loginLabel.text = self.viewModel.login
+                self.followerLabel.text = self.viewModel.followers
+                self.followingLabel.text = self.viewModel.following
+                self.thumbnail.kf.setImage(with: self.viewModel.imageURL)
             }.store(in: &subscriptions)
-    }
-    
-    private func update(_ user: UserProfile?) {
-        guard let user = user else {
-            self.nameLabel.text = "n/a"
-            self.loginLabel.text = "n/a"
-            self.followerLabel.text = ""
-            self.followingLabel.text = ""
-            self.thumbnail.image = nil
-            return
-        }
-        
-        self.nameLabel.text = user.name
-        self.loginLabel.text = user.login
-        self.followerLabel.text = "follower: \(user.followers)"
-        self.followingLabel.text = "following: \(user.following)"
-        self.thumbnail.kf.setImage(with: user.avatarUrl)
     }
 }
 

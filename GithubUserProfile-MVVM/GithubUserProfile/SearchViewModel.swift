@@ -11,9 +11,29 @@ import Combine
 final class SearchViewModel {
     
     let network: NetworkService
+    let selectedUser: CurrentValueSubject<UserProfile?, Never>
     
-    init(network: NetworkService) {
+    var name: String {
+        return selectedUser.value?.name ?? "N/A"
+    }
+    var login: String {
+        return selectedUser.value?.login ?? "N/A"
+    }
+    var followers: String {
+        guard let value = selectedUser.value?.followers else { return "" }
+        return "followers : \(value)"
+    }
+    var following: String {
+        guard let value = selectedUser.value?.following else { return "" }
+        return "followings : \(value)"
+    }
+    var imageURL: URL? {
+        return selectedUser.value?.avatarUrl
+    }
+    
+    init(network: NetworkService, selectedUser: UserProfile?) {
         self.network = network
+        self.selectedUser = CurrentValueSubject(selectedUser)
     }
     var subscriptions = Set<AnyCancellable>()
     
@@ -29,12 +49,12 @@ final class SearchViewModel {
             .sink { completion in
                 switch completion {
                 case .failure(let error):
-                    self.user = nil
+                    self.selectedUser.send(nil)
                     print("error: \(error)")
                 case .finished: break
                 }
             } receiveValue: { user in
-                self.user = user
+                self.selectedUser.send(user)
             }.store(in: &subscriptions)
     }
 }
