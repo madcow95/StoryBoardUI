@@ -11,19 +11,18 @@ import Kingfisher
 
 class UserProfileViewController: UIViewController {
     
-    let network = NetworkService(configuration: .default)
-    
     @IBOutlet weak var thumbnail: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var loginLabel: UILabel!
     @IBOutlet weak var followerLabel: UILabel!
     @IBOutlet weak var followingLabel: UILabel!
     
-    @Published private(set) var user: UserProfile?
+    var viewModel: SearchViewModel!
     var subscriptions = Set<AnyCancellable>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = SearchViewModel(network: NetworkService(configuration: .default))
         setupUI()
         embedSearchControl()
         bind()
@@ -45,7 +44,7 @@ class UserProfileViewController: UIViewController {
     }
     
     private func bind() {
-        $user
+        viewModel.$user
             .receive(on: RunLoop.main)
             .sink { [unowned self] result in
                 self.update(result)
@@ -73,37 +72,12 @@ class UserProfileViewController: UIViewController {
 extension UserProfileViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let keyword = searchController.searchBar.text
-        print("search: \(keyword)")
     }
 }
 
 extension UserProfileViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("button clicked: \(searchBar.text)")
-        
         guard let keyword = searchBar.text, !keyword.isEmpty else { return }
-        let resource = Resource<UserProfile>(base: "https://api.github.com/", path: "users/\(keyword)", params: [:], header: ["Content-Type": "application/json"])
-        
-        network.load(resource)
-            .receive(on: RunLoop.main)
-            .sink { completion in
-                switch completion {
-                case .failure(let error):
-                    self.user = nil
-                    print("error: \(error)")
-                case .finished: break
-                }
-            } receiveValue: { user in
-                self.user = user
-            }.store(in: &subscriptions)
+        viewModel.search(keyword: keyword)
     }
 }
-
-
-
-
-
-
-
-
-
