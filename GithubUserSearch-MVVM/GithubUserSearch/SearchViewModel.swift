@@ -20,6 +20,7 @@ final class searchViewModel {
     
     // Data -> Output
     @Published private(set) var users = [SearchResult]()
+    // let users: CurrentValueSubject<[SearchResult], Never>()
     
     // UserAction -> Input
     func search(keyword: String) {
