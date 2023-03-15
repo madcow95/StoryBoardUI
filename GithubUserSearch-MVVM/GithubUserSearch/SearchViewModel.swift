@@ -37,5 +37,7 @@ final class searchViewModel {
             .receive(on: RunLoop.main)
             .assign(to: \.users, on: self)
             .store(in: &subscriptions)
+        
     }
+    
 }
